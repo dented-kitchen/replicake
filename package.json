@@ -1,0 +1,41 @@
+{
+  "name": "replicake",
+  "version": "0.1.0",
+  "description": "A javascript library for the creation and manipulate of recipes.",
+  "main": "dist/replicake.cjs.js",
+  "module": "dist/replicake.esm.js",
+  "browser": "dist/replicake.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dented-kitchen/replicake.git"
+  },
+  "keywords": [
+    "recipes",
+    "cooking",
+    "baking"
+  ],
+  "author": "Dented Kitchen <contact@dentedkitchen.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dented-kitchen/replicake/issues"
+  },
+  "homepage": "https://github.com/dented-kitchen/replicake#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.0",
+    "@babel/preset-env": "^7.5.2",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "rollup": "^2.1.0",
+    "rollup-plugin-babel": "^4.3.3"
+  }
+}
