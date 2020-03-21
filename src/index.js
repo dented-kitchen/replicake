@@ -1,4 +1,4 @@
-import Recipe from './src/core/Recipe.js';
+import Recipe from './core/Recipe.js';
 
 const Replicake = {
   /**
