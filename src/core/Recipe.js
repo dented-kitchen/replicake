@@ -6,6 +6,7 @@ export default class Recipe {
       author: '',
       description: '',
       ingredients: {},
+      serves: 1,
     };
 
     const actual = Object.assign({}, defaults, options);
@@ -15,5 +16,6 @@ export default class Recipe {
     this.author = actual.author;
     this.description = actual.description;
     this.ingredients = actual.ingredients;
+    this.serves = actual.serves;
   }
 }

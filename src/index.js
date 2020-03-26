@@ -1,4 +1,8 @@
+import Ingredient from './core/Ingredient.js';
+import Nutrition from './core/Nutrition.js';
+import Quantity from './core/Quantity.js';
 import Recipe from './core/Recipe.js';
+import Units from './core/Units.js';
 
 const Replicake = {
   /**
@@ -8,6 +12,12 @@ const Replicake = {
   Create(options) {
     return new Recipe(options);
   },
+
+  Ingredient,
+  Nutrition,
+  Quantity,
+  Recipe,
+  Units,
 }
 
 export default Replicake;

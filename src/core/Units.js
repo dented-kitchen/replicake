@@ -1,21 +1,4 @@
 
-// Create 'singleton' constants for each pre-defined unit type
-// These are accessed via the Units class static getters below
-const UNITS = Object.freeze({
-  count: Object.freeze(
-    new Units({
-      name: 'count',
-      symbol: '',
-    }
-  )),
-  grams: Object.freeze(
-    new Units({
-      name: 'gram',
-      symbol: 'g',
-    }
-  )),
-});
-
 /**
  * Represents commonly used units in recipes.
  */
@@ -70,3 +53,20 @@ export default class Units {
    */
   static get GRAMS() { return UNITS.grams; }
 }
+
+// Create 'singleton' constants for each pre-defined unit type
+// These are accessed via the Units class static getters below
+const UNITS = Object.freeze({
+  count: Object.freeze(
+    new Units({
+      name: 'count',
+      symbol: '',
+    }
+  )),
+  grams: Object.freeze(
+    new Units({
+      name: 'gram',
+      symbol: 'g',
+    }
+  )),
+});

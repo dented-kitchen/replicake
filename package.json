@@ -1,6 +1,6 @@
 {
   "name": "replicake",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A javascript library for the creation and manipulate of recipes.",
   "main": "dist/replicake.cjs.js",
   "module": "dist/replicake.esm.js",
@@ -11,7 +11,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "LICENSE",
+    "package.json",
+    "README.md"
   ],
   "repository": {
     "type": "git",
