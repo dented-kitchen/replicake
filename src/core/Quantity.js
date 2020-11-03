@@ -15,4 +15,13 @@ export default class Quantity {
     this.amount = actual.amount;
     this.units = Units.Lookup(actual.units);
   }
+
+  /**
+   * Create a new Quantity object from a string which specifies both amount and unit.
+   * String must be of the form "<amount> <unit>" where all whitespace is optional. Unit string
+   * must match a unit name, its plural, or symbol exactly.
+   */
+  static FromString(str) {
+
+  }
 }
