@@ -8,7 +8,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require esm"
   },
   "files": [
     "dist",
@@ -35,11 +35,14 @@
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/preset-env": "^7.5.2",
+    "@rollup/plugin-babel": "^5.2.2",
     "babel-eslint": "^10.0.2",
+    "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.18.0",
-    "rollup": "^2.1.0",
-    "rollup-plugin-babel": "^4.3.3"
+    "esm": "^3.2.25",
+    "mocha": "^8.2.1",
+    "rollup": "^2.1.0"
   }
 }

@@ -1,3 +1,4 @@
+import Ingredient from './Ingredient.js';
 
 export default class Recipe {
   constructor(options) {
@@ -6,7 +7,6 @@ export default class Recipe {
       author: '',
       description: '',
       ingredients: {},
-      serves: 1,
     };
 
     const actual = Object.assign({}, defaults, options);
@@ -15,7 +15,31 @@ export default class Recipe {
     this.name = actual.name;
     this.author = actual.author;
     this.description = actual.description;
-    this.ingredients = actual.ingredients;
-    this.serves = actual.serves;
+
+    this.ingredients = {};
+    Object.keys(actual.ingredients).forEach((key) => {
+      const value = actual.ingredients[key];
+      if (value instanceof Ingredient) {
+        this.ingredients[key] = value;
+      }
+      else {
+        // Defaults name to key if omitted
+        let options = {
+          key,
+          name: key,
+        };
+
+        // Copy properties from value if it's an Object
+        if (value instanceof Object) {
+          Object.assign(options, value);
+        }
+        else {
+          // Otherwise we just use the value as a quantity
+          options.quantity = value;
+        }
+
+        this.ingredients[key] = new Ingredient(options);
+      }
+    });
   }
 }

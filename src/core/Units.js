@@ -30,16 +30,17 @@ export default class Units {
    * @returns {Units} Matching Units object, or undefined if not found.
    */
   static Lookup(str) {
+    let result;
     Object.values(UNITS).forEach((unit) => {
-      if (str === unit.name ||                      // Match the unit name
-          str === unit.name + 's' ||                // Match the plural unit name
-          str === unit.symbol ||                    // Match the symbol (matches '' to UNITS.count)
-          (unit.plural && str === unit.plural)) {   // Match a custom plural name
-        return unit;
+      if ((str === unit.name) ||                      // Match the unit name
+          (str === unit.name + 's') ||                // Match the plural unit name
+          (str === unit.symbol) ||                    // Match the symbol (matches empty string to UNITS.count)
+          (unit.plural && str === unit.plural)) {     // Match a custom plural name
+        result = unit;
       }
     });
 
-    return undefined;
+    return result;
   }
 
   /**
@@ -55,7 +56,7 @@ export default class Units {
 }
 
 // Create 'singleton' constants for each pre-defined unit type
-// These are accessed via the Units class static getters below
+// These are accessed via the Units class static getters above
 const UNITS = Object.freeze({
   count: Object.freeze(
     new Units({

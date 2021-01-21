@@ -1,6 +1,25 @@
 import Units from './Units.js';
 
 /**
+   * Extracts an amount and units value from a string which specifies both amount and unit.
+   * String must be of the form "<amount> <unit>" where all whitespace is optional.
+   * Amount string must be readable by parseFloat().
+   * Unit string must match a unit name, its plural, or symbol exactly.
+   */
+function _matchRegex(str) {
+  const rgx = /(\d*\.?\d*) *([a-z|A-z]*)/;
+  const groups = str.match(rgx);
+  if (groups === null) {
+    return { amount: 0, units: '' };
+  }
+
+  return { 
+    amount: parseFloat(groups[1]),
+    units: groups[2],
+  };
+}
+
+/**
  * Represent an amount with a specific {@link Units} (e.g '30 grams').
  */
 export default class Quantity {
@@ -10,18 +29,10 @@ export default class Quantity {
       units: '',
     };
 
-    const actual = Object.assign({}, defaults, options);
+    const opts = (typeof(options) === 'string') ? _matchRegex(options) : options;
+    const actual = Object.assign({}, defaults, opts);
 
     this.amount = actual.amount;
     this.units = Units.Lookup(actual.units);
-  }
-
-  /**
-   * Create a new Quantity object from a string which specifies both amount and unit.
-   * String must be of the form "<amount> <unit>" where all whitespace is optional. Unit string
-   * must match a unit name, its plural, or symbol exactly.
-   */
-  static FromString(str) {
-
   }
 }

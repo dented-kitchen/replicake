@@ -9,7 +9,7 @@ export default class Conversion {
 
     const actual = Object.assign({}, defaults, options);
 
-    this.weight = Quantity.FromString(actual.weight);
-    this.volume = Quantity.FromString(actual.volume);
+    this.weight = new Quantity(actual.weight);
+    this.volume = new Quantity(actual.volume);
   }
 }
