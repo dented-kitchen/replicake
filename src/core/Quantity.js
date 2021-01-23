@@ -33,6 +33,10 @@ export default class Quantity {
     const actual = Object.assign({}, defaults, opts);
 
     this.amount = actual.amount;
-    this.units = Units.Lookup(actual.units);
+    this.units = (actual.units instanceof Units) ? actual.units : Units.Lookup(actual.units);
+  }
+
+  toString() {
+    return `${this.amount} ${this.units}`;
   }
 }
