@@ -1,4 +1,6 @@
+import Equipment from './Equipment.js';
 import Ingredient from './Ingredient.js';
+import Instruction from './Instruction.js';
 
 export default class Recipe {
   constructor(options) {
@@ -7,6 +9,8 @@ export default class Recipe {
       author: '',
       description: '',
       ingredients: {},
+      equipment: {},
+      instructions: [],
     };
 
     const actual = Object.assign({}, defaults, options);
@@ -40,6 +44,14 @@ export default class Recipe {
 
         this.ingredients[key] = new Ingredient(options);
       }
+    });
+
+    // TODO: We can probably accept values similarly to ingredients.
+    this.equipment = actual.equipment;
+
+    this.instructions = [];
+    actual.instructions.forEach((instr) => {
+      this.instructions.push((instr instanceof Instruction) ? instr : new Instruction(instr));
     });
   }
 }
