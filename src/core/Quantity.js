@@ -37,6 +37,6 @@ export default class Quantity {
   }
 
   toString() {
-    return `${this.amount} ${this.units}`;
+    return `${this.amount}${this.units.symbol}`;
   }
 }
