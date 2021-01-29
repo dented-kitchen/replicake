@@ -20,4 +20,8 @@ export default class Ingredient {
     if (actual.conversion) this.conversion = new Conversion(actual.conversion);
     if (actual.nutrition) this.nutrition = new Nutrition(actual.nutrition);
   }
+
+  toString() {
+    return this.name;
+  }
 }
