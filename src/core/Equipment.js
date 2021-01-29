@@ -9,4 +9,8 @@ export default class Equipment {
     this.key = actual.key;
     this.name = actual.name;
   }
+
+  toString() {
+    return this.name;
+  }
 }
