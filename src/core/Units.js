@@ -73,24 +73,30 @@ const UNITS = Object.freeze({
     new Units({
       name: 'Celsius',
       symbol: 'C',
-    }
-  )),
+    })
+  ),
   count: Object.freeze(
     new Units({
       name: 'count',
       symbol: '',
-    }
-  )),
+    })
+  ),
   fahrenheit: Object.freeze(
     new Units({
       name: 'Fahrenheit',
       symbol: 'F',
-    }
-  )),
+    })
+  ),
   grams: Object.freeze(
     new Units({
       name: 'gram',
       symbol: 'g',
-    }
-  )),
+    })
+  ),
+  minutes: Object.freeze(
+    new Units({
+      name: 'minute',
+      symbol: 'm',
+    })
+  ),
 });
