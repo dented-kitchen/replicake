@@ -1,6 +1,6 @@
-import Equipment from '../core/Equipment.js';
+import Container from './Container.js';
 
-export default class Pan extends Equipment {
+export default class Pan extends Container {
   constructor(options) {
     super(options);
     const defaults = {
