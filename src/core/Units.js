@@ -16,6 +16,10 @@ export default class Units {
     if (actual.plural) this.plural = actual.plural;
   }
 
+  toJSON() {
+    return this.name;
+  }
+
   /**
    * Returns a string with the units name.
    * @returns {string} The units name.
@@ -64,6 +68,11 @@ export default class Units {
    * Temperature units constant for Fahrenheit (°F).
    */
   static get FAHRENHEIT() { return UNITS.fahrenheit; }
+
+  /**
+   * Time units constant for minutes (m).
+   */
+  static get MINUTES() { return UNITS.minutes; }
 }
 
 // Create 'singleton' constants for each pre-defined unit type
