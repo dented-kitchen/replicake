@@ -29,7 +29,8 @@ const Replicake = {
       options.ingredients[key] = Object.assign({}, _pantry[key], value);
     });
 
-    return new Recipe(options);
+    let recipe = new Recipe(options);
+    return recipe;
   },
 
   CreateIngredient(options) {

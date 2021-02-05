@@ -42,9 +42,9 @@ let bake = Replicake.CreateTechnique({
     parameters: {
       duration: Replicake.Duration,
     },
-    target: true,
+    products: true,
   },
-  template: '${name} ${target} in ${oven}${oven.temperature}{$duration}',
+  template: '${name} ${products} in ${oven}${oven.temperature}${duration}',
 });
 
 let cool = Replicake.CreateTechnique({
@@ -53,12 +53,6 @@ let cool = Replicake.CreateTechnique({
   required: [ 'target' ],
   template: '${name} ${target}${duration}${temperature}',
 });
-
-// Create our equipment
-let oven = new Replicake.Oven({ key: 'oven', name: 'oven' });
-let bowl = new Replicake.Bowl({ key: 'bowl', name: 'large bowl' });
-let bowl2 = new Replicake.Bowl({ key: 'bowl2', name: 'another bowl' });
-let muffinPan = new Replicake.Pan({ key: 'muffin-pan', name: 'muffin pan' });
 
 // This is the recipe used on the Getting Started page
 let muffins = Replicake.Create({
@@ -76,21 +70,24 @@ let muffins = Replicake.Create({
     buttermelted: '1 stick',
   },
   equipment: {
-    oven,
-    bowl,
-    bowl2,
-    muffinPan,
+    // TODO: Simple equipment list, similar to ingredients
+    oven: new Replicake.Oven({ key: 'oven', name: 'oven' }),
+    bowl: new Replicake.Bowl({ key: 'bowl', name: 'bowl' }),
+    bowl2: new Replicake.Bowl({ key: 'bowl', name: 'another bowl' }),
+    pan: new Replicake.Pan({ key: 'pan', name: 'muffin pan'}),
   },
   instructions: [
     preheat({ temperature: '400F' }),
-    mix({ target: bowl, ingredients: 'dry' }),
-    mix({ target: bowl2, ingredients: 'wet' }),
-    mix({ target: bowl, ingredients: bowl2.contents, suffix: 'until just combined' }),
-    distribute({ target: muffinPan, ingredients: bowl.contents }),
-    bake({ target: muffinPan, duration: { min: '20m', max: '30m' }, product: 'muffins' }),
+    mix({ target: 'bowl', ingredients: { tag: 'dry' } }),
+    mix({ target: 'bowl2', ingredients: { tag: 'wet' } }),
+    mix({ target: 'bowl', ingredients: 'bowl2', suffix: 'until just combined' }),
+    distribute({ target: 'pan', ingredients: 'bowl' }),
+    bake({ target: 'pan', duration: { min: '20m', max: '30m' }, products: 'muffins' }),
     cool({ target: 'muffins', duration: '10m' }),
   ],
 });
 
 //console.log(muffins);
-console.log(JSON.stringify(muffins, null, 2));
+//console.log(JSON.stringify(muffins, null, 2));
+
+muffins.instructions.forEach((i) => console.log(i.toString()));
