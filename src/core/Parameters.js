@@ -1,5 +1,5 @@
 import Duration from '../quantities/Duration.js';
-import Temperature from "../quantities/Temperature";
+import Temperature from '../quantities/Temperature';
 
 export default class Parameters {
   constructor(options, recipe) {
@@ -17,6 +17,4 @@ export default class Parameters {
     if (actual.duration) this.duration = new Duration(actual.duration);
     if (actual.temperature) this.temperature = new Temperature(actual.temperature);
   }
-
-
 }

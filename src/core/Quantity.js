@@ -6,14 +6,14 @@ import Units from './Units.js';
    * Amount string must be readable by parseFloat().
    * Unit string must match a unit name, its plural, or symbol exactly.
    */
-function _matchRegex(str) {
+function matchRegex(str) {
   const rgx = /(\d*\.?\d*) *([a-z|A-z]*)/;
   const groups = str.match(rgx);
   if (groups === null) {
     return { amount: 0, units: '' };
   }
 
-  return { 
+  return {
     amount: parseFloat(groups[1]),
     units: groups[2],
   };
@@ -29,7 +29,7 @@ export default class Quantity {
       units: '',
     };
 
-    const opts = (typeof(options) === 'string') ? _matchRegex(options) : options;
+    const opts = (typeof options === 'string') ? matchRegex(options) : options;
     const actual = Object.assign({}, defaults, opts);
 
     this.amount = actual.amount;

@@ -1,14 +1,14 @@
 import Replicake from '../src/index.js';
 
 // Setup a simple pantry dataset for this recipe
-Replicake.use({ flour: { name: 'all-purpose flour' }});
+Replicake.use({ flour: { name: 'all-purpose flour' } });
 
 // Create the techniques used in this recipe
 let preheat = Replicake.CreateTechnique({
   key: 'preheat',
   name: 'preheat',
   required: {
-    equipment: { 
+    equipment: {
       oven: Replicake.Oven,
     },
     parameters: {
@@ -21,14 +21,14 @@ let preheat = Replicake.CreateTechnique({
 let mix = Replicake.CreateTechnique({
   key: 'mix',
   name: 'mix',
-  required: [ 'target', 'ingredients' ],
+  required: ['target', 'ingredients'],
   template: '${name} ${ingredients} in ${target}',
 });
 
 let distribute = Replicake.CreateTechnique({
   key: 'distribute',
   name: 'distribute',
-  required: [ 'target', 'ingredients' ],
+  required: ['target', 'ingredients'],
   template: '${name} ${ingredients} to ${target}',
 });
 
@@ -36,7 +36,7 @@ let bake = Replicake.CreateTechnique({
   key: 'bake',
   name: 'bake',
   required: {
-    equipment: { 
+    equipment: {
       oven: Replicake.Oven,
     },
     parameters: {
@@ -50,7 +50,7 @@ let bake = Replicake.CreateTechnique({
 let cool = Replicake.CreateTechnique({
   key: 'cool',
   name: 'cool',
-  required: [ 'target' ],
+  required: ['target'],
   template: '${name} ${target}${duration}${temperature}',
 });
 
@@ -74,7 +74,7 @@ let muffins = Replicake.Create({
     oven: new Replicake.Oven({ key: 'oven', name: 'oven' }),
     bowl: new Replicake.Bowl({ key: 'bowl', name: 'bowl' }),
     bowl2: new Replicake.Bowl({ key: 'bowl', name: 'another bowl' }),
-    pan: new Replicake.Pan({ key: 'pan', name: 'muffin pan'}),
+    pan: new Replicake.Pan({ key: 'pan', name: 'muffin pan' }),
   },
   instructions: [
     preheat({ temperature: '400F' }),
@@ -87,7 +87,7 @@ let muffins = Replicake.Create({
   ],
 });
 
-//console.log(muffins);
-//console.log(JSON.stringify(muffins, null, 2));
+// console.log(muffins);
+// console.log(JSON.stringify(muffins, null, 2));
 
 muffins.instructions.forEach((i) => console.log(i.toString()));

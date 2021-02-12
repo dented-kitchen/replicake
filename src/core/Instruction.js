@@ -1,12 +1,11 @@
 import Parameters from './Parameters';
-import Technique from './Technique';
 
 export default class Instruction {
   /**
    * Create a new Instruction.
    * @param {Technique=} options.technique The technique being applied.
    * @param {*} options.parameters The parameters for the technique being applied.
-   * @param {Recipe=} recipe Optional recipe object used when instructions are part of a specific recipe.
+   * @param {Recipe=} recipe Optional recipe parent object
    */
   constructor(options, recipe) {
     const defaults = {
@@ -14,7 +13,7 @@ export default class Instruction {
     };
 
     // Simple string instruction
-    if (typeof(options) === 'string') {
+    if (typeof options === 'string') {
       this.text = options;
     }
     else {

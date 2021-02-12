@@ -1,4 +1,3 @@
-import Equipment from './Equipment.js';
 import Ingredient from './Ingredient.js';
 import Instruction from './Instruction.js';
 import Parameters from './Parameters.js';
@@ -31,21 +30,21 @@ export default class Recipe {
       }
       else {
         // Defaults name to key if omitted
-        let options = {
+        let ingrOpts = {
           key,
           name: key,
         };
 
         // Copy properties from value if it's an Object
         if (value instanceof Object) {
-          Object.assign(options, value);
+          Object.assign(ingrOpts, value);
         }
         else {
           // Otherwise we just use the value as a quantity
-          options.quantity = value;
+          ingrOpts.quantity = value;
         }
 
-        this.ingredients[key] = new Ingredient(options);
+        this.ingredients[key] = new Ingredient(ingrOpts);
       }
     });
 
@@ -61,7 +60,7 @@ export default class Recipe {
 
     // Instructions are auto-generated when the recipe changes
     this.dirty = true;
-    this._update();
+    this.#update();
   }
 
   /**
@@ -69,7 +68,7 @@ export default class Recipe {
    * @param {string} identifier Unique identifier for an ingredient, equipment or product from this recipe.
    */
   findItem(identifier) {
-    if (typeof(identifier) === 'string') {
+    if (typeof identifier === 'string') {
       if (this.ingredients[identifier]) return this.ingredients[identifier];
       if (this.equipment[identifier]) return this.equipment[identifier];
       if (this.products[identifier]) return this.products[identifier];
@@ -78,35 +77,47 @@ export default class Recipe {
     return undefined;
   }
 
-  _verifyProduct(product) {
-    if (typeof(product) === 'string') {
-      const productRef = this.products[product];
+  /**
+   * Ensures the recipe has a product object reference for a given string identifier or Ingredient class object.
+   * If the product does not exist, it is created.
+   * @param {*} product
+   */
+  #verifyProduct(product) {
+    if (typeof product === 'string') {
+      let productRef = this.products[product];
       if (!productRef) {
-        this.products[product] = new Ingredient({ key: product, name: product });
+        productRef = new Ingredient({ key: product, name: product });
+        this.products[product] = productRef;
       }
+
+      return productRef;
     }
     else if (product instanceof Ingredient) {
       const productRef = this.products[product.key];
       if (!productRef) {
         this.products[product.key] = product;
+        return product;
       }
       else if (productRef !== product) {
+        console.warn(`duplicate key detected: ${product.key}`);
         // TODO: Duplicate product key
-        // Do we error or overwrite?
+        // Do we error or overwrite? For now, we do neither.
       }
+
+      return productRef;
     }
+
     // product is assumed to be Ingredient constructor options
-    else {
-      const productRef = new Ingredient(product);
-      // TODO: Check productRef is valid, no dupe key?
-      this.products[productRef.key] = productRef;
-    }
+    const productRef = new Ingredient(product);
+    // TODO: Check productRef is valid, no dupe key?
+    this.products[productRef.key] = productRef;
+    return productRef;
   }
 
   /**
    * Called internally when the recipe changes. This will recalculate the instruction list based on any changes.
    */
-  _update() {
+  #update() {
     if (!this.dirty) return;
 
     // This function should do the following:
@@ -129,11 +140,11 @@ export default class Recipe {
       if (products) {
         if (Array.isArray(products)) {
           products.forEach((prod) => {
-            this._verifyProduct(prod);
+            this.#verifyProduct(prod);
           });
         }
         else {
-          this._verifyProduct(products);
+          this.#verifyProduct(products);
         }
       }
     });
@@ -154,5 +165,4 @@ export default class Recipe {
 
     this.dirty = false;
   }
-
 }

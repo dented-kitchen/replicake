@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-spaces */
 import Quantity from './Quantity.js';
 
 // Constants used to calculate calories
@@ -9,6 +10,9 @@ const CALORIES_PER_GRAM_PROTEIN = 4;
  * All values are assumed to be in the units indicated.
  */
 export default class Nutrition {
+  // If calories is provided in constructor
+  #calories;
+
   constructor(options) {
     const defaults = {
       size: '1 serving',
@@ -39,27 +43,27 @@ export default class Nutrition {
     this.protein = actual.protein;
 
     // Calories is optional and is estimated from nutrition macros if omitted
-    if (actual.calories) this._calories = actual.calories;
+    if (actual.calories) this.#calories = actual.calories;
   }
 
   /**
    * The number of calories, either as provided or computed based on nutrition macros.
    */
   get calories() {
-    if (this._calories) return this._calories;
+    if (this.#calories) return this.#calories;
     return this.calculateCalories();
   }
 
   set calories(value) {
-    this._calories = value;
+    this.#calories = value;
   }
 
   /**
    * Gets the approximate number of calories based on nutrition macros.
    */
   calculateCalories() {
-    return this.fat * CALORIES_PER_GRAM_FAT +
-           this.carbs * CALORIES_PER_GRAM_CARB +
-           this.protein * CALORIES_PER_GRAM_PROTEIN;
+    return this.fat * CALORIES_PER_GRAM_FAT
+            + this.carbs * CALORIES_PER_GRAM_CARB
+            + this.protein * CALORIES_PER_GRAM_PROTEIN;
   }
 }

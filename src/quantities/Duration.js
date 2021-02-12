@@ -8,7 +8,7 @@ import Units from '../core/Units';
 export default class Duration {
   constructor(options) {
     // If given a string, use the Quantity constructor
-    if (typeof(options) === 'string') {
+    if (typeof options === 'string') {
       this.min = new Quantity(options);
       this.max = this.min;
     }
@@ -20,19 +20,21 @@ export default class Duration {
 
       // If a single amount, match min/max
       if (actual.amount) {
-        this.min = new Quantity(actual.amount, actual.units || Units.MINUTES);
+        this.min = actual.amount instanceof Quantity ? actual.amount : new Quantity(actual.amount, actual.units || Units.MINUTES);
         this.max = this.min;
       }
       else {
         // Else extract the range
-        this.min = new Quantity(actual.min);
-        this.max = actual.max ? new Quantity(actual.max) : this.min;
+        this.min = actual.min instanceof Quantity ? actual.min : new Quantity(actual.min);
+        this.max = actual.max ? (actual.max instanceof Quantity ? actual.max : new Quantity(actual.max)) : this.min;
       }
     }
   }
 
   toString() {
-    if (this.min === this.max) return `${this.min}`;
+    if (this.min === this.max) {
+      return `${this.min}`;
+    }
     return `${this.min} - ${this.max}`;
   }
 }

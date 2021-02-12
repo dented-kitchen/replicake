@@ -1,4 +1,5 @@
 import Bowl from './equipment/Bowl.js';
+import Container from './equipment/Container.js';
 import Duration from './quantities/Duration.js';
 import Equipment from './core/Equipment.js';
 import Ingredient from './core/Ingredient.js';
@@ -23,8 +24,8 @@ const Replicake = {
     // Merge ingredient pantry data into the ingredients object passed to options
     Object.keys(options.ingredients).forEach((key) => {
       let value = options.ingredients[key];
-      if (typeof(value) === 'string') {
-        value = { quantity: value }
+      if (typeof value === 'string') {
+        value = { quantity: value };
       }
       options.ingredients[key] = Object.assign({}, _pantry[key], value);
     });
@@ -72,12 +73,13 @@ const Replicake = {
 
   // Equipment
   Bowl,
+  Container,
   Oven,
   Pan,
 
   // Quantities
   Duration,
   Temperature,
-}
+};
 
 export default Replicake;

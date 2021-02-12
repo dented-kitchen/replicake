@@ -59,8 +59,8 @@ export default class Technique {
     // to register replacers or specify properties (maybe just allow all of them)
 
     // Object.keys(this.required).forEach((text) => {
-    //   placeholders.push({ text, replacer: () => this.required[text] })
-    // })
+    //   placeholders.push({ text, replacer: () => parameters[text] });
+    // });
 
     let result = this.template;
     placeholders.forEach((swap) => {
