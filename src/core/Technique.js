@@ -10,7 +10,6 @@ export default class Technique {
     const defaults = {
       name: '',
       actions: [],
-      required: {},
       template: '${name}',
     };
 
@@ -18,7 +17,32 @@ export default class Technique {
     this.key = actual.key;
     this.name = actual.name;
     // TODO: Actions
-    this.required = actual.required;
+    
+    // We accept the following types for required
+    if (actual.required) {
+      this.required = {};
+      let parameters = {};
+      if (typeof actual.required === 'string') {
+        // string: single expect parameter
+        parameters[actual.required] = true;
+      }
+      else if (Array.isArray(actual.required)) {
+        // array of string: expected parameters
+        // TODO: array of complex objects?
+        actual.required.forEach((req) => {
+          parameters[req] = true;
+        });
+      }
+      else {
+        // object with ingredients, equipment and/or parameters
+        if (actual.required.ingredients) this.required.ingredients = actual.required.ingredients;
+        if (actual.required.equipment) this.required.equipment = actual.required.equipment;
+        if (actual.required.parameters) parameters = actual.required.parameters;
+      }
+
+      this.required.parameters = parameters;
+    }
+
     this.template = actual.template;
   }
 
@@ -54,13 +78,25 @@ export default class Technique {
       },
     ];
 
-    // TODO: Add required equipment from this technique as replacers
-    // To support something like {oven.temperature}, we can allow equipment
-    // to register replacers or specify properties (maybe just allow all of them)
+    // Add required equipment from this technique as replacers
+    if (this.required.equipment) {
+      Object.keys(this.required.equipment).forEach((text) => {
+        const equip = parameters.equipment[text];
+        placeholders.push({ 
+          text: new RegExp(`\\\${${text}}`, 'g'),
+          replacer: () => equip,
+        });
 
-    // Object.keys(this.required).forEach((text) => {
-    //   placeholders.push({ text, replacer: () => parameters[text] });
-    // });
+        // To support something like {oven.temperature}
+        // we add the object properties as well
+        Object.keys(equip).forEach((key) => {
+          placeholders.push({ 
+            text: new RegExp(`\\\${${text}\.${key}}`, 'g'),
+            replacer: () => equip[key],
+          });
+        })
+      });
+    }
 
     let result = this.template;
     placeholders.forEach((swap) => {

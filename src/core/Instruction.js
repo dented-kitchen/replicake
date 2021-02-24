@@ -1,4 +1,4 @@
-import Parameters from './Parameters';
+import Parameters from './Parameters.js';
 
 export default class Instruction {
   /**

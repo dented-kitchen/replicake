@@ -1,5 +1,5 @@
-import Quantity from '../core/Quantity';
-import Units from '../core/Units';
+import Quantity from '../core/Quantity.js';
+import Units from '../core/Units.js';
 
 /**
  * Represent an amount of time ('1 hour' or '20 - 30 minutes').

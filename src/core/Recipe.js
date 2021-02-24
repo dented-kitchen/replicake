@@ -77,6 +77,40 @@ export default class Recipe {
     return undefined;
   }
 
+  #verifyIngredient(ingredient) {
+    if (typeof ingredient === 'string') {
+
+    }
+  }
+
+  #verifyEquipment(equipment, type) {
+    let match = undefined;
+    Object.values(this.equipment).forEach((equip) => {
+      if (equip instanceof type) {
+        match = equip;
+      }
+    });
+
+    if (match) {
+      return match;
+    }
+
+    // TODO: Creating this equipment should include data from pantry
+    // That data will need to be injected at a higher level so perhaps this code will go bye bye
+    const options = { name: equipment, key: equipment };
+    const equip = type ? new type(options) : new Equipment(options);
+
+    if (!(equipment in this.equipment)) {
+      this.equipment[equipment] = equip;
+    }
+    else {
+      console.warn(`duplicate equip key '${equipment}'`);
+      this.equipment[`${equipment}-auto`] = equip;
+    }
+
+    return equip;
+  }
+
   /**
    * Ensures the recipe has a product object reference for a given string identifier or Ingredient class object.
    * If the product does not exist, it is created.
@@ -133,9 +167,11 @@ export default class Recipe {
     //
     // 4. Validate techniques and populate the required references (to oven, temperature, etc)
     // If the equipment does not exist, it is created and added to equipment list with a flag
+    //
+    // 5. Evaluate technique actions after each instruction to compute/evaluate recipe state.
 
     this.method.forEach((instr) => {
-      // Extract 'products' and create objects for them if they are omitted
+      // Extract 'products' and create Ingredient objects for them (only if they are omitted)
       const products = instr.parameters.products;
       if (products) {
         if (Array.isArray(products)) {
@@ -152,15 +188,31 @@ export default class Recipe {
     // After validating technique and creating needed references, create instruction list
     this.instructions = [];
     this.method.forEach((instr) => {
-      let instruction = new Instruction(instr);
-
+      // Inject required references from Technique into instruction parameters
       // Replace string keys in instructions with the actual objects.
-      instruction.parameters = new Parameters(instruction.parameters, this);
+      let instruction = new Instruction(instr, this);
+
+      // Create and tag any Ingredients or Equipment needed for Techniques (only if they are omitted)
+      const required = instr.technique.required;
+      if (required) {
+        if (required.ingredients) {
+          // TODO: ingredients
+        }
+
+        if (required.equipment) {
+          instruction.parameters.equipment = {};
+          Object.keys(required.equipment).forEach((key) => {
+            instruction.parameters.equipment[key] = this.#verifyEquipment(key, required.equipment[key]);
+          });
+        }
+      }
 
       // TODO: Prepend instructions when ingredients are not in default state
       // For example, add instruction to melt butter step before it is needed
 
       this.instructions.push(instruction);
+
+      // TODO: Evaluate technique actions to advance recipe state
     });
 
     this.dirty = false;

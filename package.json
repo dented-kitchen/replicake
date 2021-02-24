@@ -2,13 +2,14 @@
   "name": "replicake",
   "version": "0.1.1",
   "description": "A javascript library for the creation and manipulate of recipes.",
+  "type": "module",
   "main": "dist/replicake.cjs.js",
   "module": "dist/replicake.esm.js",
   "browser": "dist/replicake.umd.js",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "mocha --require esm"
+    "test": "mocha"
   },
   "files": [
     "dist",
@@ -41,7 +42,6 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.18.0",
-    "esm": "^3.2.25",
     "mocha": "^8.2.1",
     "rollup": "^2.1.0"
   }

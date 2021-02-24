@@ -1,5 +1,5 @@
 import Duration from '../quantities/Duration.js';
-import Temperature from '../quantities/Temperature';
+import Temperature from '../quantities/Temperature.js';
 
 export default class Parameters {
   constructor(options, recipe) {

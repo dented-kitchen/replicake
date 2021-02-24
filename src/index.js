@@ -30,6 +30,9 @@ const Replicake = {
       options.ingredients[key] = Object.assign({}, _pantry[key], value);
     });
 
+    // TODO: Merge equipment pantry data into the equipment passed to options
+    // TODO: This data should also be merged into the Technique required techniques
+
     let recipe = new Recipe(options);
     return recipe;
   },

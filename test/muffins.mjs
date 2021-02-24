@@ -44,7 +44,7 @@ let bake = Replicake.CreateTechnique({
     },
     products: true,
   },
-  template: '${name} ${products} in ${oven}${oven.temperature}${duration}',
+  template: '${name} ${products} in ${oven} at ${oven.temperature}${duration}',
 });
 
 let cool = Replicake.CreateTechnique({
