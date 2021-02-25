@@ -14,7 +14,15 @@ export default class Parameters {
       if (actual.products) this.products = recipe.findItem(actual.products) || actual.products;
     }
 
-    if (actual.duration) this.duration = new Duration(actual.duration);
-    if (actual.temperature) this.temperature = new Temperature(actual.temperature);
+    if (actual.duration) {
+      this.duration = actual.duration instanceof Duration
+                        ? actual.duration
+                        : new Duration(actual.duration);
+    }
+    if (actual.temperature) {
+      this.temperature = actual.temperature instanceof Temperature
+                           ? actual.temperature
+                           : new Temperature(actual.temperature);
+    }
   }
 }
