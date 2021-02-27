@@ -19,9 +19,14 @@ export default class Ingredient {
     }
     if (actual.conversion) this.conversion = new Conversion(actual.conversion);
     if (actual.nutrition) this.nutrition = new Nutrition(actual.nutrition);
+    if (actual.tags) this.tags = actual.tags;
+  }
+
+  hasTag(tag) {
+    return this.tags.includes(tag);
   }
 
   toString() {
-    return this.name;
+    return `${this.quantity ? this.quantity + ' ' : ''}${this.name}`;
   }
 }

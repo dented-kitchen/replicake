@@ -1,7 +1,16 @@
 import Replicake from '../src/index.js';
 
 // Setup a simple pantry dataset for this recipe
-Replicake.use({ flour: { name: 'all-purpose flour' } });
+Replicake.use({ 
+  flour: { name: 'all-purpose flour', tags: ['dry', 'gluten'] },
+  sugar: { name: 'granulated sugar', tags: ['dry'] },
+  bakingpowder: { name: 'baking powder', tags: ['dry'] },
+  salt: { name: 'salt', tags: ['dry'] },
+  eggs: { name: 'eggs', tags: ['wet'] },
+  milk: { name: 'whole milk', tags: ['wet'] },
+  vanilla: { name: 'vanilla extract', tags: ['wet'] },
+  buttermelted: { name: 'melted butter', tags: ['wet'] },
+});
 
 // Create the techniques used in this recipe
 let preheat = Replicake.CreateTechnique({
@@ -66,7 +75,7 @@ let muffins = Replicake.Create({
     salt: '5g',
     eggs: '1',
     milk: '170g',
-    vanilla: '1/2 tsp',
+    vanilla: '0.5 tsp',
     buttermelted: '1 stick',
   },
   equipment: {

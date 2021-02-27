@@ -1,3 +1,4 @@
+import Equipment from './Equipment.js';
 import Ingredient from './Ingredient.js';
 import Instruction from './Instruction.js';
 import Parameters from './Parameters.js';
@@ -75,6 +76,22 @@ export default class Recipe {
     }
 
     return undefined;
+  }
+
+  /**
+   * Returns an array of string keys for ingredients matched by the query object.
+   * @param {Object} query
+   * @param {string} query.tag Match ingredients with string tag
+   */
+  queryIngredients(query) {
+    let results = [];
+    Object.values(this.ingredients).forEach((ingredient) => {
+      if (query.tag && ingredient.hasTag(query.tag)) {
+        results.push(ingredient);
+      }
+    });
+
+    return results;
   }
 
   #verifyIngredient(ingredient) {
@@ -171,6 +188,23 @@ export default class Recipe {
     // 5. Evaluate technique actions after each instruction to compute/evaluate recipe state.
 
     this.method.forEach((instr) => {
+      // Evaluate instruction parameter queries
+      const ingredients = instr.parameters.ingredients;
+      if (ingredients) {
+        // Strings are handled in parameter constructor
+        // No action needed if array or instanceof Ingredient or Equipment
+        if (typeof ingredients === 'string'
+            || Array.isArray(ingredients)
+            || ingredients instanceof Ingredient
+            || ingredients instanceof Equipment) {
+          // do nothing
+        }
+        else {
+          // Any other object is interpretted as query
+          instr.parameters.ingredients = this.queryIngredients(ingredients);
+        }
+      }
+
       // Extract 'products' and create Ingredient objects for them (only if they are omitted)
       const products = instr.parameters.products;
       if (products) {
