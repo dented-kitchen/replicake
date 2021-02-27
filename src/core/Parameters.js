@@ -10,7 +10,17 @@ export default class Parameters {
     Object.assign(this, actual);
     if (recipe) {
       if (actual.target) this.target = recipe.findItem(actual.target) || actual.target;
-      if (actual.ingredients) this.ingredients = recipe.findItem(actual.ingredients) || actual.ingredients;
+      if (actual.ingredients) {
+        if (Array.isArray(actual.ingredients)) {
+          this.ingredients = [];
+          actual.ingredients.forEach((ingredient) => {
+            this.ingredients.push(recipe.findItem(ingredient) || ingredient);
+          });
+        }
+        else {
+          this.ingredients = recipe.findItem(actual.ingredients) || actual.ingredients;
+        }
+      }
       if (actual.products) this.products = recipe.findItem(actual.products) || actual.products;
     }
 
