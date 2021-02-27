@@ -31,14 +31,14 @@ export default class Units {
   /**
    * Find and returns a Units constant given a string name or symbol. Must be exact match.
    * @param {string} str Unit name or symbol to lookup.
-   * @returns {Units} Matching Units object, or undefined if not found.
+   * @returns {Units} Matching Units object, or count (TODO: ??) if not found.
    */
   static Lookup(str) {
-    let result;
+    let result = UNITS.count;
     Object.values(UNITS).forEach((unit) => {
       if ((str === unit.name) ||                      // Match the unit name
           (str === unit.name + 's') ||                // Match the plural unit name
-          (str === unit.symbol) ||                    // Match the symbol (matches empty string to UNITS.count)
+          (str === unit.symbol) ||                    // Match the symbol
           (unit.plural && str === unit.plural)) {     // Match a custom plural name
         result = unit;
       }
@@ -73,6 +73,11 @@ export default class Units {
    * Time units constant for minutes (m).
    */
   static get MINUTES() { return UNITS.minutes; }
+
+  /**
+   * Volume measure constant for a teaspoon (tsp).
+   */
+  static get TEASPOON() { return UNITS.teaspoon; }
 }
 
 // Create 'singleton' constants for each pre-defined unit type
@@ -106,6 +111,12 @@ const UNITS = Object.freeze({
     new Units({
       name: 'minute',
       symbol: 'm',
+    })
+  ),
+  teaspoon: Object.freeze(
+    new Units({
+      name: 'teaspoon',
+      symbol: 'tsp',
     })
   ),
 });
