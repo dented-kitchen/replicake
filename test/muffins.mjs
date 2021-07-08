@@ -9,7 +9,7 @@ Replicake.use({
   eggs: { name: 'eggs', tags: ['wet'] },
   milk: { name: 'whole milk', tags: ['wet'] },
   vanilla: { name: 'vanilla extract', tags: ['wet'] },
-  buttermelted: { name: 'melted butter', tags: ['wet'] },
+  buttermelted: { name: 'melted butter', sizes: { stick: '113g' }, tags: ['wet'] },
 });
 
 // Create the techniques used in this recipe
